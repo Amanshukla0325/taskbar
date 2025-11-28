@@ -13,6 +13,16 @@
     <noscript>You need to enable JavaScript to run this app.</noscript>
     <!-- A small status banner used for production debugging: if JS fails to run, this will stay visible -->
     <div id="status-banner" style="position:fixed;left:0;top:0;right:0;z-index:9999;background:#f9fafb;border-bottom:1px solid #e5e7eb;color:#111827;padding:6px 12px;font-family:system-ui,Arial,Segoe UI,Roboto;box-shadow:0 6px 18px rgba(0,0,0,0.06);">Loading app...</div>
+      <!-- Inline debug script: shows if basic inline JS is allowed/executing on the host -->
+      <script>
+        try {
+          console.log('[status-banner] inline script executed');
+          var _b = document.getElementById('status-banner');
+          if (_b) _b.textContent = 'Inline script active';
+        } catch (e) {
+          console.error('[status-banner] inline script error', e);
+        }
+      </script>
     <div id="root"></div>
   </body>
 </html>
