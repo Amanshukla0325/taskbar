@@ -1,0 +1,77 @@
+/* Minimal responsive helper CSS to augment Tailwind-like classes */
+:root {
+  --bg: #f3f4f6; /* gray-100 */
+  --primary: #3730a3; /* indigo-900 */
+  --muted: #6b7280; /* gray-500 */
+}
+
+html, body, #root {
+  height: 100%;
+  margin: 0;
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+}
+
+body {
+  background-color: var(--bg);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Make the timeline items more compact on small screens */
+.timeline-card {
+  padding: 1rem; /* default 1rem for mobile */
+}
+
+@media (min-width: 640px) {
+  /* md and up similar to sm: */
+  .timeline-card {
+    padding: 1.5rem; /* larger padding on bigger screens */
+  }
+}
+
+/* Icon sizes */
+.timeline-icon {
+  width: 2.25rem; /* 36px */
+  height: 2.25rem;
+}
+@media (min-width: 768px) {
+  .timeline-icon {
+    width: 3rem; /* 48px */
+    height: 3rem;
+  }
+}
+
+/* compact header fonts on small screens */
+.header-title {
+  font-size: 1.25rem; /* 20px */
+}
+@media (min-width: 768px) {
+  .header-title { font-size: 1.9rem /* 30px */; }
+}
+
+/* Make the summary cards grid collapse properly on xs screens */
+.summary-grid {
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  gap: 0.5rem;
+}
+@media (min-width: 768px) {
+  .summary-grid { grid-template-columns: repeat(3, 1fr); gap: 1rem; }
+}
+
+/* Make action buttons larger for touch targets */
+.action-btn {
+  padding: 0.6rem 0.9rem;
+  border-radius: 0.45rem;
+  font-size: 0.95rem;
+}
+
+/* Reduce timeline spacing on mobile */
+.timeline-wrapper { padding-left: 3rem; }
+@media (min-width: 768px) { .timeline-wrapper { padding-left: 3.5rem; } }
+
+/* Ensure admin simulator doesn't cover important content */
+.admin-bar { padding: 0.75rem; }
+
+/* text overflow protection; short date on mobile */
+.date-compact { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
