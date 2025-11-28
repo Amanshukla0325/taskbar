@@ -1,10 +1,8 @@
 import React, { useState } from 'react';
 import { 
-  AlertCircle, 
   CheckCircle2, 
   Clock, 
   Lock, 
-  ArrowRight, 
   ExternalLink, 
   ShieldAlert, 
   Calendar, 
@@ -302,7 +300,7 @@ const App = () => {
                         <div className="bg-gray-50 p-4 rounded-lg border border-gray-100 shadow-sm flex flex-col justify-center items-center h-full text-center group hover:border-indigo-200 transition-colors cursor-pointer">
               <h4 className="text-xs font-bold text-gray-400 uppercase tracking-wider mb-2">Demo Link</h4>
               {isActive || isCompleted || isBuffer || isLate ? (
-                <a href={phase.demoLink} target="_blank" className="flex flex-col items-center text-indigo-600 hover:text-indigo-800">
+                                <a href={phase.demoLink} target="_blank" rel="noopener noreferrer" className="flex flex-col items-center text-indigo-600 hover:text-indigo-800">
                                     <ExternalLink size={20} className="mb-2 group-hover:scale-110 transition-transform"/>
                   <span className="text-sm font-semibold break-all">{phase.demoLink}</span>
                 </a>
