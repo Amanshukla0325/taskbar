@@ -10,6 +10,7 @@ import {
 } from 'lucide-react';
 
 const App = () => {
+  console.log('App render', { NODE_ENV: process.env.NODE_ENV });
   // --- Configuration Based on PDF ---
   const PHASES_DATA = [
     {
