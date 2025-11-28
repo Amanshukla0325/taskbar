@@ -4,6 +4,7 @@
   "private": true,
   "description": "Tourbnb.in Phase & Payment Tracker",
   "main": "planner.js",
+  "homepage": ".",
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
