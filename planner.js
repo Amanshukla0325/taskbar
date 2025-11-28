@@ -112,9 +112,9 @@ const App = () => {
         // If finish is paid, no delay active
         if (isFinishPaid) return { daysLate: 0, penaltyDays: 0, status: 'completed' };
 
-        // Buffer is 5 days after deadline
+        // Buffer is 7 days after deadline
         const bufferEnd = new Date(deadline);
-        bufferEnd.setDate(deadline.getDate() + 5);
+        bufferEnd.setDate(deadline.getDate() + 7);
 
         if (current <= deadline) {
             return { daysLate: 0, penaltyDays: 0, status: 'active' };
@@ -245,9 +245,9 @@ const App = () => {
                             <div className="flex justify-between items-center">
                                 <div>
                                     <p className="font-bold text-yellow-800">Buffer Period Active</p>
-                                    <p className="text-sm text-yellow-700">Project work continues. {5 - daysInBuffer} days remaining before timeline penalty.</p>
+                                    <p className="text-sm text-yellow-700">Project work continues. {7 - daysInBuffer} days remaining before timeline penalty.</p>
                                 </div>
-                                <div className="text-2xl font-bold text-yellow-600">{5 - daysInBuffer}d</div>
+                                <div className="text-2xl font-bold text-yellow-600">{7 - daysInBuffer}d</div>
                             </div>
                         </div>
                     )}
