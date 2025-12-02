@@ -20,11 +20,11 @@ const App = () => {
       baseDeadline: "2024-12-04",
       purpose: "Establish the Skeleton System, Auth & Database Schema.",
       steps: [
-        "Admin creates Hotel A (Subdomain)",
-        "Manager logs in & adds Room 101",
-        "Create booking 2 PM - 11 AM (Check conflict logic)"
+        "admin creates hotel",
+        "manager logs in and add rooms",
+        "user can create bookings"
       ],
-      demoLink: "https://dev-p1.tourbnb.in"
+      demoLink: "https://tourbnb-phase1.vercel.app/"
     },
     {
       id: 2,
@@ -95,8 +95,8 @@ const App = () => {
 
   // --- State for Simulation ---
   // 'paidCheckpoints' now tracks specific parts: '1_start', '1_finish', etc.
-  // Initial state: Phase 1 Start (25%) is PAID.
-  const [currentDate, setCurrentDate] = useState("2024-12-05"); 
+  // Use today's date for calculations; removed editable date simulator.
+  const currentDate = new Date().toISOString().slice(0, 10);
   const [paidCheckpoints, setPaidCheckpoints] = useState(['1_start']); 
     
   // --- Logic Engine ---
@@ -124,8 +124,8 @@ const App = () => {
     } else {
       // Late!
       const daysLate = Math.floor((current - bufferEnd) / (1000 * 60 * 60 * 24));
-      const penaltyDays = daysLate * 3; // 3 days for every 1 day late
-      return { daysLate, penaltyDays, status: 'late' };
+      // Penalty days and multiplier logic removed — keep informational daysLate only
+      return { daysLate, penaltyDays: 0, status: 'late' };
     }
   };
 
@@ -139,15 +139,19 @@ const App = () => {
     const originalDate = new Date(phase.baseDeadline);
     originalDate.setDate(originalDate.getDate() + totalPenaltyShift);
         
-    // If this phase is currently causing a delay, add it to the accumulator for NEXT phases
-    if (status === 'late') {
-      totalPenaltyShift += penaltyDays;
-    }
+    // Penalty accumulation disabled — timeline not shifted by penalty days
 
+    // Allow forcing Phase 1 to appear red while keeping other phases normal.
     const isCompleted = status === 'completed';
-    const isLate = status === 'late';
+    let isLate = status === 'late';
     const isBuffer = status === 'buffer';
     const isActive = status === 'active';
+
+    // For Phase 1, force a red (late) styling but suppress the critical delay banner/penalty mentions
+    const hideCriticalDetails = phase.id === 1;
+    if (hideCriticalDetails) {
+      isLate = true;
+    }
 
     // Check specific payment parts
     const isStartPaid = paidCheckpoints.includes(`${phase.id}_start`);
@@ -186,7 +190,6 @@ const App = () => {
                 <span className={`flex items-center gap-1 ${isLate ? 'text-red-600 font-bold' : 'text-gray-500'}`}>
                   <Calendar size={14} /> 
                   Target: <span className="date-compact">{displayDate}</span>
-                  {isLate && <span className="text-xs bg-red-200 text-red-800 px-2 py-0.5 rounded-full ml-2">+{penaltyDays} Days Shift</span>}
                 </span>
                 <span className="flex items-center gap-1 text-gray-500">
                   <DollarSign size={14} /> 
@@ -251,30 +254,7 @@ const App = () => {
             </div>
           )}
 
-          {isLate && !isFinishPaid && (
-            <div className="mb-6 bg-red-100 border-l-4 border-red-600 p-4 rounded-r">
-              <div className="flex flex-col md:flex-row md:justify-between md:items-center gap-4">
-                <div>
-                  <p className="font-bold text-red-800 flex items-center gap-2">
-                    <ShieldAlert size={18} />
-                    CRITICAL DELAY
-                  </p>
-                  <p className="text-sm text-red-700 mt-1">
-                    Buffer exceeded by {daysLate} days. 
-                    <br/>
-                    <strong>Multiplier Logic (3x):</strong> {daysLate} × 3 = <span className="underline decoration-2">{penaltyDays} days</span> added to launch date.
-                  </p>
-                </div>
-                <div className="text-right">
-                  <button 
-                    onClick={() => setPaidCheckpoints([...paidCheckpoints, `${phase.id}_finish`])}
-                    className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg shadow text-sm font-medium transition-colors">
-                    Pay 75% Remainder
-                  </button>
-                </div>
-              </div>
-            </div>
-          )}
+          {/* Critical delay banners removed for all phases per request */}
 
           {/* The 3-Block Grid Section (User Request) */}
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -367,32 +347,7 @@ const App = () => {
         {PHASES_DATA.map((phase, index) => renderPhase(phase, index))}
       </div>
 
-      {/* ----------------- ADMIN SIMULATOR (Bottom Bar) ----------------- */}
-      <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 p-4 shadow-lg z-50">
-        <div className="max-w-4xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
-          <div className="flex items-center gap-2">
-            <span className="font-bold text-gray-700 uppercase text-xs tracking-wider">Tracker Simulator</span>
-            <span className="text-xs text-gray-500 hidden md:inline">| Change date to test logic</span>
-          </div>
-                    
-          <div className="flex items-center gap-4 bg-gray-100 p-2 rounded-lg">
-            <label className="text-sm text-gray-600 font-medium">Current Date:</label>
-            <input 
-              type="date" 
-              value={currentDate} 
-              onChange={(e) => setCurrentDate(e.target.value)}
-              className="border rounded px-2 py-1 text-sm text-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500"
-            />
-          </div>
-
-          <div className="flex items-center gap-2 text-xs text-gray-500">
-            <span>Try setting date to:</span>
-            <button onClick={() => setCurrentDate("2024-12-04")} className="underline hover:text-indigo-600">Start (Clean)</button>
-            <button onClick={() => setCurrentDate("2024-12-10")} className="underline hover:text-indigo-600">Buffer (Warning)</button>
-            <button onClick={() => setCurrentDate("2024-12-15")} className="underline hover:text-red-600">Late (Red Alert)</button>
-          </div>
-        </div>
-      </div>
+      {/* Admin simulator removed: date is fixed to today's date for calculations */}
     </div>
   );
 };
