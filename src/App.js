@@ -133,7 +133,7 @@ const App = () => {
   let totalPenaltyShift = 0;
 
   const renderPhase = (phase, index) => {
-    const { daysLate, penaltyDays, status, daysInBuffer } = calculateDelay(phase.id, phase.baseDeadline);
+    const { status, daysInBuffer } = calculateDelay(phase.id, phase.baseDeadline);
         
     // Shift this phase's display date by previous penalties
     const originalDate = new Date(phase.baseDeadline);
