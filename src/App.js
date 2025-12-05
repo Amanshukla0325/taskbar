@@ -12,6 +12,7 @@ import {
 const App = () => {
   console.log('App render', { NODE_ENV: process.env.NODE_ENV });
   // --- Configuration Based on PDF ---
+  // Shift all phase dates except Phase 1 by 3 days for display
   const PHASES_DATA = [
     {
       id: 1,
@@ -30,7 +31,7 @@ const App = () => {
       id: 2,
       title: "Phase 2: Basic Booking Flow & Dashboards",
       costTotal: 20000,
-      baseDeadline: "2024-12-19",
+      baseDeadline: "2024-12-22", // shifted by 3 days
       purpose: "Working MVP with Calendar Widget & Tenant Routing.",
       steps: [
         "View/Cancel/Modify bookings in Dashboard",
@@ -43,7 +44,7 @@ const App = () => {
       id: 3,
       title: "Phase 3: Channel Manager & Flex Inventory",
       costTotal: 60000,
-      baseDeadline: "2025-01-03",
+      baseDeadline: "2025-01-06", // shifted by 3 days
       purpose: "Real-time Sync, Hourly Logic & OTA Integration.",
       steps: [
         "Test Hybrid Timeline (10AM-2PM & 4PM-10AM)",
@@ -56,7 +57,7 @@ const App = () => {
       id: 4,
       title: "Phase 4: Guest Portal (Magic Link)",
       costTotal: 60000,
-      baseDeadline: "2025-01-18",
+      baseDeadline: "2025-01-21", // shifted by 3 days
       purpose: "App-less Guest Journey, KYC & Smart Locks.",
       steps: [
         "Guest opens Magic Link (No Login)",
@@ -69,7 +70,7 @@ const App = () => {
       id: 5,
       title: "Phase 5: Testing & Tuning",
       costTotal: 60000,
-      baseDeadline: "2025-02-02",
+      baseDeadline: "2025-02-05", // shifted by 3 days
       purpose: "Scale, Security Audit & Load Performance.",
       steps: [
         "Simulate 100+ bookings/minute (k6)",
@@ -82,7 +83,7 @@ const App = () => {
       id: 6,
       title: "Phase 6: Final Launch & Handoff",
       costTotal: 60000,
-      baseDeadline: "2025-02-17",
+      baseDeadline: "2025-02-20", // shifted by 3 days
       purpose: "Production Deployment & Client Handover.",
       steps: [
         "DNS Pointing (*.tourbnb.in)",
@@ -309,17 +310,13 @@ const App = () => {
               <h1 className="text-3xl font-bold tracking-tight">Project Tracker: Tourbnb.in</h1>
               <p className="text-indigo-200 mt-2">Real-time Development & Payment Status</p>
             </div>
-            <div className="text-right hidden md:block">
-              <div className="text-indigo-300 text-sm">Projected Launch</div>
-              <div className="text-2xl sm:text-3xl font-bold">
-                {new Date(new Date("2025-02-17").getTime() + (totalPenaltyShift * 86400000)).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })}
-              </div>
-              {totalPenaltyShift > 0 && (
-                <div className="text-red-400 text-xs font-bold mt-1">
-                  +{totalPenaltyShift} Days Delayed
+              {/* Projected Launch always visible, small on mobile */}
+              <div className="text-right md:text-right text-left flex flex-col md:block absolute right-2 top-2 md:static md:mt-0 mt-2" style={{minWidth:'90px'}}>
+                <div className="text-indigo-300 text-xs md:text-sm leading-tight">Projected Launch</div>
+                <div className="text-xs md:text-2xl md:sm:text-3xl font-bold text-white md:text-white text-indigo-200">
+                  20 February 2025
                 </div>
-              )}
-            </div>
+              </div>
           </div>
                     
           {/* Summary Cards */}
@@ -330,8 +327,8 @@ const App = () => {
             </div>
             <div className="bg-white/10 backdrop-blur rounded-lg p-4 border border-white/20">
               <div className="text-xs text-indigo-300 uppercase">Current Status</div>
-              <div className={`text-lg font-semibold ${totalPenaltyShift > 0 ? 'text-red-300' : 'text-green-300'}`}>
-                {totalPenaltyShift > 0 ? 'Delayed' : 'On Track'}
+              <div className="text-lg font-semibold text-red-500 animate-pulse">
+                On Hold
               </div>
             </div>
             <div className="bg-white/10 backdrop-blur rounded-lg p-4 border border-white/20">
@@ -344,6 +341,18 @@ const App = () => {
 
       {/* Main Timeline Content */}
         <div className="max-w-4xl w-full mx-auto px-4 -mt-12 relative z-10">
+        {/* Warning box before Phase 1 */}
+        <div className="mb-8">
+          <div className="bg-red-100 border-l-4 border-red-500 p-4 rounded-r shadow animate-pulse">
+            <div className="flex items-center gap-3">
+              <ShieldAlert size={28} className="text-red-500" />
+              <div>
+                <div className="font-bold text-red-800 text-lg">Attention Required</div>
+                <div className="text-red-700 text-sm mt-1">The project has been paused for 3 days. Kindly process the necessary payment immediately to allow work to resume.</div>
+              </div>
+            </div>
+          </div>
+        </div>
         {PHASES_DATA.map((phase, index) => renderPhase(phase, index))}
       </div>
 
