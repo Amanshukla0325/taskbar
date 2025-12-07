@@ -31,7 +31,7 @@ const App = () => {
       id: 2,
       title: "Phase 2: Basic Booking Flow & Dashboards",
       costTotal: 20000,
-      baseDeadline: "2024-12-25", // shifted by 6 days (3+3)
+      baseDeadline: "2024-12-27", // shifted by 8 days (3+3+2)
       purpose: "Working MVP with Calendar Widget & Tenant Routing.",
       steps: [
         "View/Cancel/Modify bookings in Dashboard",
@@ -44,7 +44,7 @@ const App = () => {
       id: 3,
       title: "Phase 3: Channel Manager & Flex Inventory",
       costTotal: 60000,
-      baseDeadline: "2025-01-09", // shifted by 6 days (3+3)
+      baseDeadline: "2025-01-11", // shifted by 8 days (3+3+2)
       purpose: "Real-time Sync, Hourly Logic & OTA Integration.",
       steps: [
         "Test Hybrid Timeline (10AM-2PM & 4PM-10AM)",
@@ -57,7 +57,7 @@ const App = () => {
       id: 4,
       title: "Phase 4: Guest Portal (Magic Link)",
       costTotal: 60000,
-      baseDeadline: "2025-01-24", // shifted by 6 days (3+3)
+      baseDeadline: "2025-01-26", // shifted by 8 days (3+3+2)
       purpose: "App-less Guest Journey, KYC & Smart Locks.",
       steps: [
         "Guest opens Magic Link (No Login)",
@@ -70,7 +70,7 @@ const App = () => {
       id: 5,
       title: "Phase 5: Testing & Tuning",
       costTotal: 60000,
-      baseDeadline: "2025-02-08", // shifted by 6 days (3+3)
+      baseDeadline: "2025-02-10", // shifted by 8 days (3+3+2)
       purpose: "Scale, Security Audit & Load Performance.",
       steps: [
         "Simulate 100+ bookings/minute (k6)",
@@ -83,7 +83,7 @@ const App = () => {
       id: 6,
       title: "Phase 6: Final Launch & Handoff",
       costTotal: 60000,
-      baseDeadline: "2025-02-23", // shifted by 6 days (3+3)
+      baseDeadline: "2025-02-25", // shifted by 8 days (3+3+2)
       purpose: "Production Deployment & Client Handover.",
       steps: [
         "DNS Pointing (*.tourbnb.in)",
@@ -135,11 +135,11 @@ const App = () => {
 
   const renderPhase = (phase, index) => {
     const { status, daysInBuffer } = calculateDelay(phase.id, phase.baseDeadline);
-        
+
     // Shift this phase's display date by previous penalties
     const originalDate = new Date(phase.baseDeadline);
     originalDate.setDate(originalDate.getDate() + totalPenaltyShift);
-        
+
     // Penalty accumulation disabled — timeline not shifted by penalty days
 
     // Allow forcing Phase 1 to appear red while keeping other phases normal.
@@ -158,7 +158,8 @@ const App = () => {
     const isStartPaid = paidCheckpoints.includes(`${phase.id}_start`);
     const isFinishPaid = paidCheckpoints.includes(`${phase.id}_finish`);
 
-    const displayDate = originalDate.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
+    // Correct displayDate logic
+    let displayDate = originalDate.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
 
         return (
           <div key={phase.id} className={`relative timeline-wrapper pb-8 sm:pb-12 ${index === PHASES_DATA.length - 1 ? 'last-phase' : ''}`}>
@@ -314,7 +315,7 @@ const App = () => {
               <div className="text-right md:text-right text-left flex flex-col md:block absolute right-2 top-2 md:static md:mt-0 mt-2" style={{minWidth:'90px'}}>
                 <div className="text-indigo-300 text-xs md:text-sm leading-tight">Projected Launch</div>
                 <div className="text-xs md:text-2xl md:sm:text-3xl font-bold text-white md:text-white text-indigo-200">
-                  23 February 2025
+                  25 February 2025
                 </div>
               </div>
           </div>
@@ -348,7 +349,7 @@ const App = () => {
               <ShieldAlert size={28} className="text-red-500" />
               <div>
                 <div className="font-bold text-red-800 text-lg">Attention Required</div>
-                <div className="text-red-700 text-sm mt-1">Please note that payment delays will regrettably result in a 6-day extension of the overall project schedule.</div>
+                <div className="text-red-700 text-sm mt-1">Please note that payment delays will regrettably result in a 8-day extension of the overall project schedule.</div>
               </div>
             </div>
           </div>
