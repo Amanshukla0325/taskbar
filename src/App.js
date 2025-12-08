@@ -18,7 +18,7 @@ const App = () => {
       id: 1,
       title: "Phase 1: Foundational Setup & Core Engine",
       costTotal: 20000,
-      baseDeadline: "2024-12-04",
+      baseDeadline: "2025-12-04",
       purpose: "Establish the Skeleton System, Auth & Database Schema.",
       steps: [
         "admin creates hotel",
@@ -31,7 +31,7 @@ const App = () => {
       id: 2,
       title: "Phase 2: Basic Booking Flow & Dashboards",
       costTotal: 20000,
-      baseDeadline: "2024-12-27", // shifted by 8 days (3+3+2)
+      baseDeadline: "2025-12-30", // updated to 30 Dec 2025
       purpose: "Working MVP with Calendar Widget & Tenant Routing.",
       steps: [
         "View/Cancel/Modify bookings in Dashboard",
@@ -44,7 +44,7 @@ const App = () => {
       id: 3,
       title: "Phase 3: Channel Manager & Flex Inventory",
       costTotal: 60000,
-      baseDeadline: "2025-01-11", // shifted by 8 days (3+3+2)
+      baseDeadline: "2026-01-14", // updated to 14 Jan 2026
       purpose: "Real-time Sync, Hourly Logic & OTA Integration.",
       steps: [
         "Test Hybrid Timeline (10AM-2PM & 4PM-10AM)",
@@ -57,7 +57,7 @@ const App = () => {
       id: 4,
       title: "Phase 4: Guest Portal (Magic Link)",
       costTotal: 60000,
-      baseDeadline: "2025-01-26", // shifted by 8 days (3+3+2)
+      baseDeadline: "2026-01-29", // updated to 29 Jan 2026
       purpose: "App-less Guest Journey, KYC & Smart Locks.",
       steps: [
         "Guest opens Magic Link (No Login)",
@@ -70,7 +70,7 @@ const App = () => {
       id: 5,
       title: "Phase 5: Testing & Tuning",
       costTotal: 60000,
-      baseDeadline: "2025-02-10", // shifted by 8 days (3+3+2)
+      baseDeadline: "2026-02-13", // updated to 13 Feb 2026
       purpose: "Scale, Security Audit & Load Performance.",
       steps: [
         "Simulate 100+ bookings/minute (k6)",
@@ -83,7 +83,7 @@ const App = () => {
       id: 6,
       title: "Phase 6: Final Launch & Handoff",
       costTotal: 60000,
-      baseDeadline: "2025-02-25", // shifted by 8 days (3+3+2)
+      baseDeadline: "2026-02-28", // updated to 28 Feb 2026
       purpose: "Production Deployment & Client Handover.",
       steps: [
         "DNS Pointing (*.tourbnb.in)",
@@ -144,7 +144,7 @@ const App = () => {
 
     // Allow forcing Phase 1 to appear red while keeping other phases normal.
     const isCompleted = status === 'completed';
-    let isLate = status === 'late';
+    let isLate = true; // Force all phases to appear red
     const isBuffer = status === 'buffer';
     const isActive = status === 'active';
 
@@ -243,18 +243,6 @@ const App = () => {
             </div>
           </div>
 
-          {/* Buffer/Penalty Banner */}
-          {isBuffer && !isFinishPaid && (
-            <div className="mb-6 bg-yellow-100 border-l-4 border-yellow-500 p-4 rounded-r">
-              <div className="flex justify-between items-center">
-                <div>
-                  <p className="font-bold text-yellow-800">Buffer Period Active</p>
-                  <p className="text-sm text-yellow-700">Project work continues. {7 - daysInBuffer} days remaining before timeline penalty.</p>
-                </div>
-                <div className="text-2xl font-bold text-yellow-600">{7 - daysInBuffer}d</div>
-              </div>
-            </div>
-          )}
 
           {/* Critical delay banners removed for all phases per request */}
 
@@ -315,7 +303,7 @@ const App = () => {
               <div className="text-right md:text-right text-left flex flex-col md:block absolute right-2 top-2 md:static md:mt-0 mt-2" style={{minWidth:'90px'}}>
                 <div className="text-indigo-300 text-xs md:text-sm leading-tight">Projected Launch</div>
                 <div className="text-xs md:text-2xl md:sm:text-3xl font-bold text-white md:text-white text-indigo-200">
-                  25 February 2025
+                  <b>28 February 2026</b>
                 </div>
               </div>
           </div>
@@ -349,7 +337,7 @@ const App = () => {
               <ShieldAlert size={28} className="text-red-500" />
               <div>
                 <div className="font-bold text-red-800 text-lg">Attention Required</div>
-                <div className="text-red-700 text-sm mt-1">Please note that payment delays will regrettably result in a 8-day extension of the overall project schedule.</div>
+                <div className="text-red-700 text-sm mt-1">Please note that payment delays will regrettably result in a 11-day extension of the overall project schedule.</div>
               </div>
             </div>
           </div>
